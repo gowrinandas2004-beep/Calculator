@@ -119,7 +119,7 @@
             justify-content: center;
             align-items: center;
             border: 3px dashed #69c8f2;
-            box-shadow: inset 0 0 0 4px rgba(255,255,255,.12);
+            box-shadow: inset 0 0 0 4px rgba(255, 255, 255, 0.12);
         }
 
         .coupon .percent {
@@ -175,6 +175,18 @@
             outline-color: #168dcc;
         }
 
+        /* Remove up/down arrows from number inputs */
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
         .buttons {
             display: flex;
             justify-content: center;
@@ -189,6 +201,7 @@
             background: transparent;
             color: #777;
             font-size: 13px;
+            cursor: pointer;
         }
 
         .buttons button:hover {
@@ -234,22 +247,30 @@
 
     <header class="page-heading">
         <h2>DISCOUNT CALCULATOR</h2>
-        <p>Transform your savings and uncover the ultimate discount calculation for your items</p>
+        <p>
+            Transform your savings and uncover the ultimate discount
+            calculation for your items
+        </p>
     </header>
 
     <main class="main-panel">
         <div class="container-fluid">
             <div class="row align-items-center g-4">
 
-                <!-- LEFT: RESULTS -->
+                <!-- Left side: Results -->
                 <div class="col-md-7">
                     <section class="result-box">
+
                         <h3>Amount Paid</h3>
 
                         <h4>New Price</h4>
-                        <div class="new-price" id="newPrice">₹0</div>
+
+                        <div class="new-price" id="newPrice">
+                            ₹0
+                        </div>
 
                         <div class="result-bottom">
+
                             <div class="result-item">
                                 <h5>Amount Saved</h5>
                                 <p id="amountSaved">₹0</p>
@@ -259,11 +280,12 @@
                                 <h5>Price Difference</h5>
                                 <p id="priceDifference">₹0</p>
                             </div>
+
                         </div>
                     </section>
                 </div>
 
-                <!-- RIGHT: CALCULATOR -->
+                <!-- Right side: Calculator -->
                 <div class="col-md-5">
                     <section class="calculator">
 
@@ -275,18 +297,33 @@
                         </div>
 
                         <form class="form-area" id="discountForm">
+
                             <label for="amount">EnterAmount(₹)</label>
-                            <input type="number" id="amount" min="0"
-                                   step="any" required>
+
+                            <input
+                                type="number"
+                                id="amount"
+                                min="0"
+                                step="any"
+                                required
+                            >
 
                             <label for="discount">Enter Discount(%)</label>
-                            <input type="number" id="discount" min="0"
-                                   max="100" step="any" required>
+
+                            <input
+                                type="number"
+                                id="discount"
+                                min="0"
+                                max="100"
+                                step="any"
+                                required
+                            >
 
                             <div class="buttons">
                                 <button type="submit">CALCULATE</button>
                                 <button type="button" id="resetBtn">RESET</button>
                             </div>
+
                         </form>
 
                     </section>
@@ -302,11 +339,24 @@
         form.addEventListener("submit", function (event) {
             event.preventDefault();
 
-            const amount = Number(document.getElementById("amount").value);
-            const discount = Number(document.getElementById("discount").value);
+            const amount = Number(
+                document.getElementById("amount").value
+            );
 
-            if (amount < 0 || discount < 0 || discount > 100) {
-                alert("Enter a valid amount and discount between 0% and 100%.");
+            const discount = Number(
+                document.getElementById("discount").value
+            );
+
+            if (
+                document.getElementById("amount").value === "" ||
+                document.getElementById("discount").value === "" ||
+                !Number.isFinite(amount) ||
+                !Number.isFinite(discount) ||
+                amount < 0 ||
+                discount < 0 ||
+                discount > 100
+            ) {
+                alert("Please enter a valid amount and a discount from 0% to 100%.");
                 return;
             }
 
